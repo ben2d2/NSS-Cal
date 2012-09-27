@@ -20,8 +20,8 @@ class CalendarTest < Test::Unit::TestCase
     end
 
     def test07_day_of_week
-        cal = Calendar.new(13, 1835)
-        assert_equal(6, cal.day_of_week(13, 1835))
+        cal = Calendar.new(10, 1976)
+        assert_equal(6, cal.day_of_week(10, 1976))
     end
 
     def test08_day_of_week

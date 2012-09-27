@@ -32,6 +32,7 @@ class Calendar
 	end
 
 
+		
 
 
 	def days_in_month#calls number of arguments for test line #13 in test file
@@ -46,8 +47,8 @@ class Calendar
 			days_range = (1..31).to_a
 		end	
 		blankstr=""
-		i=0
 		j=0
+		i=0
 		days_range.each {|m|
 			if m.to_s.length<2
 			digit_space=" "
@@ -61,26 +62,26 @@ class Calendar
 		else
 			zellers=zellers-1
 		end
-		offset_zel=5-zellers
-		if i==offset_zel
-		start="   "*zellers
+		zel_offset=zellers-zellers
 
+		if i == zel_offset
+			start = "   "*zellers
 		else
-			
-		start=""
+			start = ""
 		end
+		i+=1
 
-			if j == 6-zellers+7||j == 6-zellers+14||j == 6-zellers+21||j == 6-zellers+28||j==offset_zel+1
+
+			if j == 6-zellers||j == 6-zellers+7||j == 6-zellers+14||j == 6-zellers+21||j == 6-zellers+28
 				line_break="\n"
 			else
 				line_break=""
 			end
 			charac=digit_space, m
 			print start, charac,  " ", line_break
-		i+=1
 		j+=1
 	}
-		blankstr
+		blankstr=""
 		
 	end
 	def month_name(month)
@@ -91,10 +92,12 @@ class Calendar
 	def generate_cal(month, year)
 		month=month.to_i
 		year=year.to_i
-		puts month_name(month-1), year
+		mn_title=month_name(month-1)
+		yr_title=year
+		title=mn_title.to_s+" "+yr_title.to_s
+		puts title.center(20)
 		puts "Su Mo Tu We Th Fr Sa"
-		print @buffer, days_in_month
-
+		print days_in_month
 	end
 end
 			
