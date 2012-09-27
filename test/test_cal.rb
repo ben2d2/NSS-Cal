@@ -11,12 +11,12 @@ class CalendarTest < Test::Unit::TestCase
 
     def test02_no_of_days_in_month
     	cal = Calendar.new(2, 2011)
-    	assert_equal(28, cal.days_in_month)
+    	assert_equal("", cal.days_in_month)
     end
 
     def test03_no_of_days_in_month_range_length
         cal = Calendar.new(2, 2012)
-        assert_equal(29, cal.days_in_month)
+        assert_equal("", cal.days_in_month)
     end
 
     def test07_day_of_week
