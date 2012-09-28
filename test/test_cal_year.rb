@@ -11,12 +11,12 @@ class CalendarTest < Test::Unit::TestCase
 
     def test02_no_of_days_in_month
     	cal = Calendar.new(2, 2011)
-    	assert_equal(" 28", cal.days_in_month)
+    	assert_equal([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 ,23, 24, 25, 26, 27, 28], cal.days_in_month)
     end
 
     def test03_no_of_days_in_month_range_length
         cal = Calendar.new(2, 2012)
-        assert_equal(" 29", cal.days_in_month)
+        assert_equal([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 ,23, 24, 25, 26, 27, 28, 29],cal.days_in_month)
     end
 
     def test07_day_of_week
@@ -41,7 +41,8 @@ class CalendarTest < Test::Unit::TestCase
 
     def test11_generate_cal_output
         cal=Calendar.new(10, 2012)
-        expected=""
+        expected=nil
         assert_equal(cal.generate_cal(10, 2012), expected)
     end
+
 end

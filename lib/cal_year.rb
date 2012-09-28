@@ -67,9 +67,29 @@ class Calendar
 		else
 			days_range = (1..31).to_a
 		end	
-		
+
 		#loop through days_range array
-		days_range.each {|d|
+		days = days_range.each {|d|
+							#convert month string to integer
+		month=@month.to_i
+		#convert year string to integer
+		year=@year.to_i
+		#set new var for string concotenation
+		mn_title=month_name(month-1)
+		#set new var for string concotenation
+		yr_title=year
+		#week day name string
+		weekdays="Su Mo Tu We Th Fr Sa"
+		title=mn_title.to_s+" "+yr_title.to_s
+		title_ctr=title.center(20)
+		@m=Array.new()
+		@m<<[
+		#print title(month/year) centered in 20 spaces
+		title_ctr,
+		#puts week day names for columns
+		weekdays,
+		#print days in month array
+		]
 			#add space to single digit charceters
 			if d.to_s.length<2
 				digit_space=" "
@@ -92,51 +112,23 @@ class Calendar
 				#print blank
 				start = ""
 			end
-			
-			#compare j increment with zellers to determine array index to add line break
-			if j == 6-zellers||j == 6-zellers+7||j == 6-zellers+14||j == 6-zellers+21||j == 6-zellers+28
-				#add line break
-				line_break="  "
-
-			else
-				#leave line break blank
-				line_break=""
-			end
-			if i = days_range.to_s.length
-				trailing_space = " "
-			else
-				trailing_space = ""
-			end
 			#add leading spaces to single digit numbers
 			day=digit_space, d
 			#print leading space for start day, each day, trailing space & line breaks
-			print start, day, trailing_space, line_break
+			day_str=start.to_s+day.to_s+" "
+			
+			m1=Array.new
+			m1<<day_str
+			@m<<m1
 		i+=1
 		j+=1} 
-		
+		print @m, "\n"
 	end
  
 	def generate_cal(month, year)
-		#convert month string to integer
-		month=month.to_i
-		#convert year string to integer
-		year=year.to_i
-		#set new var for string concotenation
-		mn_title=month_name(month-1)
-		#set new var for string concotenation
-		yr_title=year
-		#set vars to string and concotenate
-		title=mn_title.to_s+" "+yr_title.to_s
-		#week day name string
-		weekdays="Su Mo Tu We Th Fr Sa"
-		#print title(month/year) centered in 20 spaces
-		puts title.center(20)
-		#puts week day names for columns
-		puts weekdays
-		#print days in month array
 		days_in_month
-		print "\n"
 	end
+
 end
 			
 			
