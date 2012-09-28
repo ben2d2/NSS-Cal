@@ -26,6 +26,13 @@ class Calendar
 			false
 		end
 	end
+
+	def month_name(month)
+		#month name array
+		month_nm=["January","February","March","April","May","June","July","August","September","October","November","December"]
+		#gets month from array based on ARGV month or test month
+		month=month_nm[month]
+	end
 	
 	def day_of_week(month, year)
 		#convert January & Februray for Zeller's & reduce year by 1
@@ -60,6 +67,7 @@ class Calendar
 		else
 			days_range = (1..31).to_a
 		end	
+		
 		#loop through days_range array
 		days_range.each {|d|
 			#add space to single digit charceters
@@ -88,7 +96,8 @@ class Calendar
 			#compare j increment with zellers to determine array index to add line break
 			if j == 6-zellers||j == 6-zellers+7||j == 6-zellers+14||j == 6-zellers+21||j == 6-zellers+28
 				#add line break
-				line_break="\n"
+				line_break="  "
+
 			else
 				#leave line break blank
 				line_break=""
@@ -103,14 +112,8 @@ class Calendar
 			#print leading space for start day, each day, trailing space & line breaks
 			print start, day, trailing_space, line_break
 		i+=1
-		j+=1}
-	end
-
-	def month_name(month)
-		#month name array
-		month_nm=["January","February","March","April","May","June","July","August","September","October","November","December"]
-		#gets month from array based on ARGV month or test month
-		month=month_nm[month]
+		j+=1} 
+		
 	end
  
 	def generate_cal(month, year)

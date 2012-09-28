@@ -5,7 +5,7 @@ year=ARGV[1]
 
 
 calendar = Calendar.new(month, year)
-puts calendar.generate_cal(month, year)
+calendar.generate_cal(month, year)
 
 
 
