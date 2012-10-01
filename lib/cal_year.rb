@@ -26,13 +26,6 @@ class Calendar
 			false
 		end
 	end
-
-	def month_name(month)
-		#month name array
-		month_nm=["January","February","March","April","May","June","July","August","September","October","November","December"]
-		#gets month from array based on ARGV month or test month
-		month=month_nm[month]
-	end
 	
 	def day_of_week(month, year)
 		#convert January & Februray for Zeller's & reduce year by 1
@@ -49,10 +42,6 @@ class Calendar
 	end
 
 	def days_in_month
-		#incrementor for start day offset comparison
-		i=0
-		#incrementor for line break comparison
-		j=0
 
 		#get day range for feb in leap year
 		if is_leap_year? && @month == 2 || @month == 14
@@ -67,68 +56,50 @@ class Calendar
 		else
 			days_range = (1..31).to_a
 		end	
-
 		#loop through days_range array
-		days = days_range.each {|d|
-							#convert month string to integer
-		month=@month.to_i
+		
+	end
+
+	def month_name(month)
+		#month name array
+		month_nm=["January","February","March","April","May","June","July","August","September","October","November","December"]
+		#gets month from array based on ARGV month or test month
+		month=month_nm[month]
+	end
+ 
+	def push_to_array(month, year)
+		#convert month string to integer
+		month=month.to_i
 		#convert year string to integer
-		year=@year.to_i
+		year=year.to_i
 		#set new var for string concotenation
 		mn_title=month_name(month-1)
 		#set new var for string concotenation
 		yr_title=year
+		#set vars to string and concotenate
+		title=mn_title.to_s+" "+yr_title.to_s
 		#week day name string
 		weekdays="Su Mo Tu We Th Fr Sa"
-		title=mn_title.to_s+" "+yr_title.to_s
-		title_ctr=title.center(20)
-		@m=Array.new()
-		@m<<[
 		#print title(month/year) centered in 20 spaces
-		title_ctr,
+		mn_ar=Array.new
+		mn_ar<<[title.center(20)]
 		#puts week day names for columns
-		weekdays,
+		mn_ar<<[weekdays]
 		#print days in month array
-		]
-			#add space to single digit charceters
-			if d.to_s.length<2
-				digit_space=" "
-			else
-				digit_space=""
-			end
-			#reset zellers to 0-6 for easier comparisons(from 1,2,3,4,5,6,0 to 0,1,2,3,4,5,6)
-			zellers=day_of_week(@month, @year)
-			if zellers == 0
-				zellers = 6
-			else
-				zellers=zellers-1
-			end
-			#set first day offset
-			#compare iteration of days_range to 0
-			if i == 0
-				#print at begininng of days_range array if equal to 0
-				start = "   "*zellers
-			else
-				#print blank
-				start = ""
-			end
-			#add leading spaces to single digit numbers
-			day=digit_space, d
-			#print leading space for start day, each day, trailing space & line breaks
-			day_str=start.to_s+day.to_s+" "
-			
-			m1=Array.new
-			m1<<day_str
-			@m<<m1
-		i+=1
-		j+=1} 
-		print @m, "\n"
-	end
- 
-	def generate_cal(month, year)
-		days_in_month
+		mn_ar<<[days_in_month]
 	end
 
+	def generate_cal(month, year)
+	while month == 1 || month ==2 do
+		print push_to_array(month, year)[0], "  "
+
+		break
+	end 
+	while month ==3 do
+		print push_to_array(month, year)[0], "\n"
+
+		break
+	end 
+	end
 end
-			
 			

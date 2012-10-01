@@ -28,6 +28,7 @@ class Calendar
 	end
 	
 	def day_of_week(month, year)
+		#Use Zeller's Congruence to determine start day of each month http://en.wikipedia.org/wiki/Zeller%27s_congruence (Implementation in Software)
 		#convert January & Februray for Zeller's & reduce year by 1
 		if month == 1||month == 2
 			month += 12

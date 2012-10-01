@@ -30,7 +30,7 @@ class CalendarTest < Test::Unit::TestCase
     end
 
     def test09_month_name
-        cal = Calendar.new(3, 2012)
+        cal = Calendar.new(2, 2012)
         assert_equal("March", cal.month_name(2))
     end
 
@@ -40,8 +40,15 @@ class CalendarTest < Test::Unit::TestCase
     end
 
     def test11_generate_cal_output
-        cal=Calendar.new(10, 2012)
-        expected=""
+        cal=Calendar.new(month, year)
+        expected="    October 2012    
+Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6 
+ 7  8  9 10 11 12 13 
+14 15 16 17 18 19 20 
+21 22 23 24 25 26 27 
+28 29 30 31 
+"
         assert_equal(cal.generate_cal(10, 2012), expected)
     end
 end
