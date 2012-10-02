@@ -15,6 +15,7 @@ How to Use It
 
 Dependancies
 • Requires lib/cal.rb for methods
+• Ruby v-1.8.7
 
 Author Information & Attribution
 • Authored by Ben Bridges

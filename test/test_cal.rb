@@ -5,50 +5,82 @@ class CalendarTest < Test::Unit::TestCase
 
 
 	def test01_is_leap_year
-		cal = Calendar.new(2, 2012)
-        assert_equal(true, cal.is_leap_year?)
+		cal = Calendar.new(2, 2011)
+        assert_equal(false, cal.is_leap_year?)
     end
 
-    def test02_no_of_days_in_month
-    	cal = Calendar.new(2, 2011)
-    	assert_equal(" 28", cal.days_in_month)
+    def test02_no_of_days_in_month_length
+    	cal = Calendar.new(2, 1931)
+    	assert_equal((1..28), cal.days_in_month)
     end
 
     def test03_no_of_days_in_month_range_length
         cal = Calendar.new(2, 2012)
-        assert_equal(" 29", cal.days_in_month)
+        assert_equal((1..29), cal.days_in_month)
+    end
+
+    def test04_no_of_days_in_month_range_length
+        cal = Calendar.new(6, 1834)
+        assert_equal((1..30), cal.days_in_month)
+    end
+
+    def test05_no_of_days_in_month_range_length
+        cal = Calendar.new(7, 1987)
+        assert_equal((1..31), cal.days_in_month)
     end
 
     def test07_day_of_week
         cal = Calendar.new(10, 1976)
-        assert_equal(6, cal.day_of_week(10, 1976))
+        assert_equal(6, cal.day_of_week)
     end
 
     def test08_day_of_week
         cal = Calendar.new(6, 1955)
-        assert_equal(4, cal.day_of_week(6, 1955))
+        assert_equal(4, cal.day_of_week)
     end
 
     def test09_month_name
         cal = Calendar.new(2, 2012)
-        assert_equal("March", cal.month_name(2))
+        assert_equal("March", cal.month_name)
     end
 
     def test10_month_name
         cal = Calendar.new(9, 2012)
-        assert_equal("October", cal.month_name(9))
+        assert_equal("October", cal.month_name)
     end
 
-    def test11_generate_cal_output
-        cal=Calendar.new(month, year)
-        expected="    October 2012    
-Su Mo Tu We Th Fr Sa
-    1  2  3  4  5  6 
- 7  8  9 10 11 12 13 
-14 15 16 17 18 19 20 
-21 22 23 24 25 26 27 
-28 29 30 31 
-"
-        assert_equal(cal.generate_cal(10, 2012), expected)
+    def test12_zellers_offset
+        cal = Calendar.new(10 ,2012)
+        assert_equal("   ", cal.zellers_offset)
+    end
+
+    def test13_zellers_offset
+        cal = Calendar.new(11 ,2879)
+        assert_equal("         ", cal.zellers_offset)
+    end
+
+    def test14_zellers_offset
+        cal = Calendar.new(9 ,1888)
+        assert_equal("                  ", cal.zellers_offset)
+    end
+
+    def test15_line_breaks
+        cal = Calendar.new(6, 1888)
+        assert_equal("\n", cal.line_breaks)
+    end
+
+    def test16_line_breaks
+        cal = Calendar.new(11, 2879)
+        assert_equal("\n", cal.line_breaks)
+    end
+
+    def test17_line_spaces
+        cal = Calendar.new(9, 1888)
+        assert_equal("  ", cal.line_spaces)
+    end
+
+    def test18_line_spaces
+        cal = Calendar.new(11, 2879)
+        assert_equal("  ", cal.line_spaces)
     end
 end
