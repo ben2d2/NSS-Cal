@@ -13,61 +13,57 @@ class Calendar
 
 	def is_leap_year?
 		#this statement is returning false
-		@year % 100 != 0 && (@year % 400 == 0 || @year % 4 == 0)
-		# #if year % by 4 = 0 make is leap year true
-		# if @year % FOUR_YRS == 0 
-		# 	true
-		# #if year % 100 = 0 make is leap year false
-		# elsif @year % ONE_HUNDRED_YRS == 0
-		# 	false
-		# #if year % 400 = 0 make isn leap year true
-		# elsif @year % FOUR_HUNDRED_YRS == 0
-		# 	true
-		# #if not any above make is leap year false
-		# else
-		# 	false
-		# end
+		# @year % 100 != 0 && (@year % 400 == 0 || @year % 4 == 0)
+		#if year % by 4 = 0 make is leap year true
+		if @year % FOUR_YRS == 0 
+			true
+		#if year % 100 = 0 make is leap year false
+		elsif @year % ONE_HUNDRED_YRS == 0
+			false
+		#if year % 400 = 0 make isn leap year true
+		elsif @year % FOUR_HUNDRED_YRS == 0
+			true
+		#if not any above make is leap year false
+		else
+			false
+		end
 	end
 	
-	def day_of_week
+	def day_of_week(month, year)
 		#Use Zeller's Congruence to determine start day of each month http://en.wikipedia.org/wiki/Zeller%27s_congruence (Implementation in Software)
 		#convert January & Februray for Zeller's & reduce year by 1
-		if @month < 3
-			@month += 12
-			@year -= 1
+		if month == 1 || month == 2
+			month += 12
+			year -= 1
 		end
 		#calculate leap year offset for Zeller's
-		leap_year_offset = (@year/FOUR_YRS).floor + 6 * (@year/ONE_HUNDRED_YRS).floor + (@year/FOUR_HUNDRED_YRS).floor
+		leap_year_offset = (year/FOUR_YRS).floor + 6 * (year/ONE_HUNDRED_YRS).floor + (year/FOUR_HUNDRED_YRS).floor
 		#calculate march offset for Zeller's
-		march_offset = ((@month + 1) * 26 / 10).floor
+		march_offset = ((month + 1) * 26 / 10).floor
 		#calculate Zeller's for start day of month/week
-		(1+march_offset+@year+leap_year_offset)%7
+		(1+march_offset+year+leap_year_offset)%7
 	end
 
 	def days_in_month
-		#reset month to 2 if 14
-		if @month == 14
-			@month = 2
-		end
-		#is_leap_year returns false so this makes feb a non-leap year
-		if is_leap_year? && @month == 2
-			days_range = (1..28)
-		#get days range for feb year
-		elsif @month == 2
+		#is_leap_year returns true so this makes feb a leap year
+		if is_leap_year? && @month == 2||@month == 14
 			days_range = (1..29)
+		#get days range for feb non-leap year
+		elsif @month == 2||@month == 14
+			days_range = (1..28)
 		#get days range for april, june, sept & nov
 		elsif @month == 4||@month == 6||@month == 9||@month == 11
 			days_range = (1..30)
 		#get days range for all other months
 		else
 			days_range = (1..31)
-		end	
+		end 
 		days_range
 	end
 
 	def zellers_reset
 		#reset zeller number for more accurate comparisons with my days_range array(changes zellers range from 1..6,0 to 0..6)
-		zellers = day_of_week
+		zellers = day_of_week(@month, @year)
 			if zellers == 0
 				zellers = 6
 			else
@@ -85,18 +81,18 @@ class Calendar
 		#create new remaining_weeks array to hold weeks 2 - 5
 		remaining_weeks = []
 		#create new array to hold all weeks in a given month
-		weeks = []
+		all_weeks = []
 		#create reference to array by subtracting zellers_reset integer from 7. this will refer to the first week's ending day in array
 		zel = 7-zellers_reset.to_i
 		#push first zel number of days to first bucket in array
-		weeks<<days_in_month.to_a.first(zel)
+		all_weeks<<days_in_month.to_a.first(zel)
 		#push remaining days to an array to prepare to slice remaining weeks
 		remaining_weeks<<days_in_month.to_a.drop(zel)
 		#flatten array to prepare to slice remaining weeks
 		remaining_weeks.flatten!
 		#add remaining weeks to weeks_array in seperate buckets split by 7. completes array of arrays of weeks per month
-		weeks += remaining_weeks.each_slice(7).to_a
-		weeks
+		all_weeks += remaining_weeks.each_slice(7).to_a
+		all_weeks
 	end
 
 
@@ -122,6 +118,7 @@ class Calendar
 		puts weekdays
 		#prints indention offset for first weekday of the month
 		print zellers_offset
+		#print week_breaks
 		#begin printing calendar
 		week_breaks[0].each{|d| print d.to_s.rjust(2), " "}
 		print "\n"
@@ -131,8 +128,11 @@ class Calendar
 		print "\n"
 		week_breaks[3].each{|d| print d.to_s.rjust(2), " "}
 		print "\n"
+		if week_breaks[4] == nil
+		else
 		week_breaks[4].each{|d| print d.to_s.rjust(2), " "}
 		print "\n"
+		end
 		#if given month has six weeks print 6th week
 		if week_breaks[5] == nil
 		else
@@ -140,6 +140,6 @@ class Calendar
 		print "\n"
 		end
 	end
+
 end
-			
 			

@@ -30,18 +30,18 @@ class CalendarTest < Test::Unit::TestCase
     end
 
     def test05_no_of_days_in_month_range_length
-        cal = Calendar.new(7, 1987)
+        cal = Calendar.new(12, 1989)
         assert_equal((1..31), cal.days_in_month)
     end
 
     def test07_day_of_week
         cal = Calendar.new(10, 1976)
-        assert_equal(6, cal.day_of_week)
+        assert_equal(6, cal.day_of_week(10, 1976))
     end
 
     def test08_day_of_week
         cal = Calendar.new(6, 1955)
-        assert_equal(4, cal.day_of_week)
+        assert_equal(4, cal.day_of_week(6, 1955))
     end
 
     def test09_month_name
@@ -69,9 +69,41 @@ class CalendarTest < Test::Unit::TestCase
         assert_equal("                  ", cal.zellers_offset)
     end
 
-    def test15
+    def test15_week_breaks_in_array
         cal = Calendar.new(2, 2012)
-        assert_equal "                  ", cal.week_breaks
+        assert_equal [[1, 2, 3, 4],
+ [5, 6, 7, 8, 9, 10, 11],
+ [12, 13, 14, 15, 16, 17, 18],
+ [19, 20, 21, 22, 23, 24, 25],
+ [26, 27, 28, 29]], cal.week_breaks
     end
+
+    def test16_week_breaks_in_array
+        cal = Calendar.new(2, 2011)
+        assert_equal [[1, 2, 3, 4, 5],
+ [6, 7, 8, 9, 10, 11, 12],
+ [13, 14, 15, 16, 17, 18, 19],
+ [20, 21, 22, 23, 24, 25, 26],
+ [27, 28]], cal.week_breaks
+    end
+
+    def test17_week_breaks_in_array
+        cal = Calendar.new(4, 1987)
+        assert_equal [[1, 2, 3, 4],
+ [5, 6, 7, 8, 9, 10, 11],
+ [12, 13, 14, 15, 16, 17, 18],
+ [19, 20, 21, 22, 23, 24, 25],
+ [26, 27, 28, 29, 30]], cal.week_breaks
+    end
+
+    def test18_week_breaks_in_array
+        cal = Calendar.new(7, 1891)
+        assert_equal [[1, 2, 3, 4],
+ [5, 6, 7, 8, 9, 10, 11],
+ [12, 13, 14, 15, 16, 17, 18],
+ [19, 20, 21, 22, 23, 24, 25],
+ [26, 27, 28, 29, 30, 31]], cal.week_breaks
+    end
+
 
 end
